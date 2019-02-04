@@ -17,6 +17,9 @@ Route::get('/', function () {
 
 //User management routes
 Route::get('user_management', ['as' => 'user_management', 'uses' => '\App\Http\Controllers\Controller@user_management']);
+Route::post('ban_user', ['as' => 'ban_account', 'uses' => '\App\Http\Controllers\Controller@ban_account']);
+Route::post('activate_account', ['as' => 'activate_account', 'uses' => '\App\Http\Controllers\Controller@activate_account']);
+Route::post('visit_profile', ['as' => 'visit_profile', 'uses' => '\App\Http\Controllers\Controller@visit_profile']);
 Route::get('register', ['as' => 'register', 'uses' => '\App\Http\Controllers\Controller@register']);
 Route::get('login', ['as' => 'login', 'uses' => '\App\Http\Controllers\Controller@login']);
 Route::get('profile', ['as' => 'profile', 'uses' => '\App\Http\Controllers\Controller@profile']);
@@ -37,3 +40,4 @@ Route::get('dashboard', ['as' => 'dashboard', 'uses' => '\App\Http\Controllers\D
 Route::get('application/index', ['as' => 'applicationIndex', 'uses' => '\App\Http\Controllers\ApplicationController@index']);
 Route::get('template', ['as' => 'downloadTemplate', 'uses' => '\App\Http\Controllers\ApplicationController@downloadTemplate']);
 Route::post('application/new', ['as' => 'newApplication', 'uses' => '\App\Http\Controllers\ApplicationController@add']);
+Route::post('application/upload-presentation', ['as' => 'uppresentation', 'uses' => '\App\Http\Controllers\ApplicationController@upload_presentation']);

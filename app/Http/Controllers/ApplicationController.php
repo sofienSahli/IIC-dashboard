@@ -15,6 +15,8 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 
 class ApplicationController extends BaseController
@@ -37,7 +39,7 @@ class ApplicationController extends BaseController
             'Content-Type: application/vnd.openxmlformats-officedocument.presentationml.presentation',
         );
 
-        return  response()->download($file, 'template.pptx', $headers);
+        return response()->download($file, 'template.pptx', $headers);
 
     }
 
@@ -75,4 +77,38 @@ class ApplicationController extends BaseController
         response()->download($file, 'template.pptx', $headers);
         return view('application_management_views.post_application_view');
     }
+
+    public function upload_presentation(Request $request)
+    {
+        //    DB::table('users')
+        //      ->where('id', $request->all()['id'])
+        //     ->update(['isActive' => "1"]);
+
+        if ($request->hasFile('file')) {
+            // $request->image->store();
+
+
+            $fileName = $request->file("file");
+            if (is_null($fileName)) {
+                return redirect('login');
+            }
+            $file_extension = $fileName->getClientOriginalExtension();
+            if (($file_extension == "pptx")) {
+                $path = $fileName->store("public/images");
+                $file_path = "storage" . substr($path, 6);
+                DB::table('applications')
+                    ->where('id', $request->all()['id'])
+                    ->update(['isPresentationSubmited' => "1", 'presentation_file' => $file_path]);
+                return redirect('login');
+            }
+
+
+        } else {
+            $user = Session::get('user');
+            return view('application_management_views.submit_presentation_view', ["title" => 'Dashboard', 'user' => $user]);
+        }
+
+
+    }
+
 }

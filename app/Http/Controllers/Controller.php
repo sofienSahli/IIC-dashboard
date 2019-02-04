@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AccountCreated;
 use Illuminate\Support\Facades\DB;
 
 use App\Entities\User;
@@ -13,6 +14,8 @@ use Illuminate\Http\Request;
 use App\Mail\OrderShipped;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Pusher\Pusher;
+use Pusher\PusherException;
 
 class Controller extends BaseController
 {
@@ -25,7 +28,6 @@ class Controller extends BaseController
 
     function login()
     {
-
         return view('user_management_views.login', ['page_title' => 'Dashboard login']);
     }
 
@@ -34,8 +36,7 @@ class Controller extends BaseController
     function loginRerection(Request $request)
     {
         $data = $request->all();
-        $user = DB::table('users')->where('email', '=', $data['email'])->where('password', '=', $data['password'])->first();
-
+        $user = User::where('email', $data['email'])->where('password', $data['password'])->first();
         if (is_null($user)) {
             return view('user_management_views.login', ['page_title' => 'Dashboard login', 'error' => 'Invalid e-mail / password']);
 
@@ -43,7 +44,8 @@ class Controller extends BaseController
             return view('user_management_views.login', ['page_title' => 'Dashboard login', 'error' => 'Account not activated. Please refer to your adimistrator.']);
         } else {
 
-
+            $disabled_account = DB::table('users')->where('isActive', '=', '0')->count();
+            Session::put('disabled_account', $disabled_account);
             Session::put('user', $user);
 
             if ($user->role == "Super Admin") {
@@ -52,7 +54,8 @@ class Controller extends BaseController
                 return redirect('dashboard');
 
             } else if ($user->role == "Startuper") {
-                return view('dashboard_view', ["title" => 'Dashboard', 'user' => $user]);
+
+                return view('application_management_views.submit_presentation_view', ["title" => 'Dashboard', 'user' => $user]);
 
             }
         }
@@ -115,7 +118,7 @@ class Controller extends BaseController
         $user->role = $date['Role'];
         $user->isActive = false;
         $user->save();
-
+        $this->notify();
         if ($user->role == 'Startuper') {
             return view("application_management_views.apply", ['user' => $user]);
         }
@@ -123,11 +126,65 @@ class Controller extends BaseController
 
     }
 
-    function user_management()
+    function notify()
     {
-        $user = DB::table('users')->where('isActive', '=', false)->where('role', '=', 'Admin')->get();
-        return view('user_management_views.user_management', ['title' => 'New accounts', 'users' => $user]);
+        $options = array(
+            'cluster' => 'ap2',
+            'useTLS' => true
+        );
+        try {
+            $pusher = new Pusher(
+                'fa2d81006f4d56b91ca3',
+                '97598b415e5a81cc36ab',
+                '705888',
+                $options
+            );
+            $data['message'] = 'New Account created';
+
+            $pusher->trigger('account-creation', 'my-event', $data);
+
+        } catch (PusherException $e) {
+        }
+
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     *
+     */
+    function user_management()
+    {
+        if (Session::has('user')) {
+            $u = Session::get('user');
+            if ($u->role == "Super Admin") {
+
+                $user = User::all();
+                return view('user_management_views.user_management', ['title' => 'New accounts', 'users' => $user]);
+            }
+        }
+        return redirect('login');
+    }
+
+    function ban_account(Request $request)
+    {
+        DB::table('users')
+            ->where('id', $request->all()['id'])
+            ->update(['isActive' => "0"]);
+        return redirect('user_management');
+    }
+
+    function activate_account(Request $request)
+    {
+        DB::table('users')
+            ->where('id', $request->all()['id'])
+            ->update(['isActive' => "1"]);
+        return redirect('user_management');
+    }
+
+    function visit_profile(Request $request)
+    {
+        $user = User::find($request->all()['id']);
+        return view('user_management_views.visit_profil_view', ['title' => $user->name . "'s Profile", 'user' => $user]);
+    }
 }
 

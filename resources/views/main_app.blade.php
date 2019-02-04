@@ -46,8 +46,10 @@
     </header>
     <div id="dw-s1" class="bmd-layout-drawer bg-faded">
         <header class="d-flex justify-content-center shadow">
-            @if(Session::has('user'))
-
+            @if(Session::has('user')   )
+                @if( Session::get('user')->role == "Startuper")
+                    <script> window.location = "/login"; </script>
+                @endif
                 <img src="{{ asset(Session::get('user')->profile_picture)  }}" class="img-thumbnail"/>
                 <a class="navbar-brand">{{ Session::get('user')->last_name." ".Session::get('user')->name }}</a>
                 <button class="btn-primary"> {{Session::get('user')->email }}</button>
@@ -64,7 +66,8 @@
             @if(Session::get('user')->role =='Super Admin')
                 <a class="list-group-item d-md-inline-flex" href="{{route('user_management')}}"><i
                             class="fas fa-users"></i> New accounts <span class="badge badge-primary"
-                                                                         style="margin-left: 1%;">99+</span> </a>
+                                                                         style="margin-left: 1%;">{{Session::get('disabled_account')}}</span>
+                </a>
             @endif
             @else
                 <script> window.location = "/login"; </script>
@@ -86,7 +89,52 @@
         </div>
     </main>
 </div>
+@if(Session::get('user')->role =='Super Admin')
+    <script src="https://js.pusher.com/4.3/pusher.min.js"></script>
+    <script>
 
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('fa2d81006f4d56b91ca3', {
+            cluster: 'ap2',
+            forceTLS: true
+        });
+
+        var channel = pusher.subscribe('account-creation');
+        channel.bind('my-event', function (data) {
+            notifyMe();
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            if (!Notification) {
+                alert('Desktop notifications not available in your browser. Try Chromium.');
+                return;
+            }
+
+            if (Notification.permission !== "granted")
+                Notification.requestPermission();
+        });
+
+
+        function notifyMe() {
+            if (Notification.permission !== "granted")
+                Notification.requestPermission();
+            else {
+                var notification = new Notification("New Account creation", {
+                    icon: '{{ asset('images/logo.png') }}',
+                    body: "new Account has been created",
+                });
+
+                notification.onclick = function () {
+                    window.open('{{ route('user_management') }}');
+                };
+
+            }
+        }
+
+    </script>
+@endif
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
