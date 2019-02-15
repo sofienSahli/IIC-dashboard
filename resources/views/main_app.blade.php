@@ -33,7 +33,8 @@
         <div class="navbar navbar-light bg-faded  d-flex justify-content-start">
             <button class="navbar-toggler" type="button" data-toggle="drawer" data-target="#dw-s1">
                 <span class="sr-only">Toggle drawer</span>
-                <i class="material-icons">menu</i>
+                <i class="material-icons">
+                    menu</i>
             </button>
             <img src="{{asset('images/logo.png')}}" style="width:75px; margin-left: 3%;"/>
             @if(!empty($title))
@@ -57,16 +58,22 @@
         </header>
         <ul class="list-group ">
             <a class="list-group-item " href="{{route('dashboard')}}"><i class="fas fa-chart-line"></i> Dashboard </a>
-            <a class="list-group-item " href="{{route('applicationIndex')}}"><i class="fas fa-table"></i>Startup
-                Application</a>
+
+
+            <a class="list-group-item " href="{{route('applicationIndex')}}">
+                <i class="fas fa-table"></i>
+                Expected Vote <span class="badge badge-primary" id="submited-to-vote-badge">
+                    </span>
+            </a>
+
             <a class="list-group-item "><i class="far fa-address-card"></i>App. Reviews <span
                         class="badge badge-primary"
                         style="margin-left: 2px;">4</span> </a>
 
             @if(Session::get('user')->role =='Super Admin')
                 <a class="list-group-item d-md-inline-flex" href="{{route('user_management')}}"><i
-                            class="fas fa-users"></i> New accounts <span class="badge badge-primary"
-                                                                         style="margin-left: 1%;">{{Session::get('disabled_account')}}</span>
+                            class="fas fa-users"></i> New accounts
+                    <span class="badge badge-primary" style="margin: 1%;" id="accounts_badge"> 0</span>
                 </a>
             @endif
             @else
@@ -127,7 +134,7 @@
                 });
 
                 notification.onclick = function () {
-                    window.open('{{ route('user_management') }}');
+                    window.open('{{ route('dashboard') }}');
                 };
 
             }
@@ -156,5 +163,7 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.0/js/mdb.min.js"></script>
+<script src="{{ asset('js/drawerAjax.js') }}"></script>
+
 </body>
 </html>

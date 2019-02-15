@@ -181,6 +181,13 @@ class Controller extends BaseController
         return redirect('user_management');
     }
 
+    function accounts_badge()
+    {
+        $count = DB::table('users')
+            ->where('isActive', "=", 0)->count();
+        return $count;
+    }
+
     function visit_profile(Request $request)
     {
         $user = User::find($request->all()['id']);

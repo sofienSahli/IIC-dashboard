@@ -80,7 +80,7 @@
             <thead>
             <tr>
                 <th scope="col">Applicant's name</th>
-                <th scope="col"> Work</th>
+                <th scope="col">Work</th>
                 <th scope="col">Field of study</th>
                 <th scope="col">Applicant phone number</th>
                 <th scope="col"> Startup is working</th>
@@ -100,15 +100,21 @@
                     @else
                         <td> Not yet working</td>
                     @endif
-                    <td>
-                        <button class="btn btn-danger">Reject</button>
-                        <button class="btn btn-primary">Accept</button>
+                    <td id="vote-side">
+                        <div class="d-inline-flex">
+                            <a href="{{ url('application/detail/'.$app->id) }}">
+                                <button class="btn btn-primary"> Full details</button>
+                            </a>
+                        </div>
+
+
+
                     </td>
+
                 </tr>
+
             @endforeach
             </tbody>
         </table>
-    </div>
-
     </div>
 @endsection

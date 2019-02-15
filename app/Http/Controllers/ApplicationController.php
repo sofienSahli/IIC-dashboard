@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 
 use App\Entities\Applications;
+use App\Vote\Vote;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -26,9 +27,21 @@ class ApplicationController extends BaseController
 
     public function index()
     {
-        $app = Applications::all();
+        if (Session::has('user')) {
 
-        return view('application_management_views.table_view_application', ['applications' => $app, 'title' => 'Pending applications']);
+            $app = Applications::where('isAccepted', 1)->get();
+            $user = Session::get('user');
+            $votes = Vote::where('user_id', $user->id)->get();
+
+            return view('application_management_views.table_view_application',
+                [
+                    'applications' => $app,
+                    'title' => 'Pending applications',
+                    'votes' => $votes,
+                    'user' => $user
+                ]);
+        } else
+            return redirect('login');
     }
 
     public function downloadTemplate()
@@ -108,6 +121,88 @@ class ApplicationController extends BaseController
             return view('application_management_views.submit_presentation_view', ["title" => 'Dashboard', 'user' => $user]);
         }
 
+
+    }
+
+    public function downloadPresentation(Request $request)
+    {
+        $app = Applications::find($request->all()['id']);
+        $file = public_path($app->presentation_file);
+
+        $headers = array(
+            'Content-Type: application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        );
+
+        return response()->download($file, 'template.pptx', $headers);
+        // redirect('user_management');
+
+    }
+
+    public function submitApplication(Request $request)
+    {
+        DB::table('applications')->where('id', $request->all()['id'])
+            ->update(['isAccepted' => "1"]);
+
+        return redirect('application/index');
+    }
+
+    public function vote_up(Request $request)
+    {
+        $vote = new Vote;
+        $vote->user_id = $request->all()['number2'];
+        $vote->application_id = $request->all()['number1'];
+        $vote->isAccepted = true;
+        $vote->save();
+        return redirect('application/detail/' . $request->all()['number1']);
+    }
+
+    public function vote_down(Request $request)
+    {
+
+        $vote = new Vote;
+        $vote->user_id = $request->all()['number2'];
+        $vote->application_id = $request->all()['number1'];
+        $vote->isAccepted = false;
+        $vote->save();
+        return redirect('application/detail/' . $request->all()['number1']);
+    }
+
+    public function detail($id)
+    {
+        if (Session::has('user')) {
+            $positive_votes = DB::table('votes')->where('application_id', "=", $id)
+                ->where("isAccepted", "=", 1)->count();
+
+            $negative_votes = DB::table('votes')->where('application_id', "=", $id)
+                ->where("isAccepted", "=", 0)->count();
+
+            $user_id = Session::get('user');
+            $app = Applications::find($id);
+            $vote = DB::table("votes")->where('user_id', "=", $user_id->id)->where('application_id', "=", $id)->get();
+            return view('application_management_views.application_detail', ['app' => $app,
+                'vote' => $vote,
+                'title' => 'Application Details',
+                'user' => $user_id,
+                'positive_votes' => $positive_votes,
+                'negative_votes' => $negative_votes
+            ]);
+        }
+        return redirect('/login');
+    }
+
+    public function new_applications()
+    {
+        if (Session::has('user')) {
+
+            $user_id = Session::get('user')->id;
+            $count = DB::table('applications')->where('isAccepted', "=", "1")->count();
+            $already_voted = DB::table('votes')->where('user_id', '=', $user_id)->count();
+            if ($already_voted > $count)
+                return 0;
+            else
+                return $count - $already_voted;
+        } else
+            return 0;
 
     }
 

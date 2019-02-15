@@ -60,3 +60,7 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     key: 'fa2d81006f4d56b91ca3'
 });
+import axios from "axios";
+window.axios = axios;
+
+

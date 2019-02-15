@@ -25,6 +25,8 @@ Route::get('login', ['as' => 'login', 'uses' => '\App\Http\Controllers\Controlle
 Route::get('profile', ['as' => 'profile', 'uses' => '\App\Http\Controllers\Controller@profile']);
 Route::post('signin', ['as' => 'sign_in', 'uses' => '\App\Http\Controllers\Controller@add']);
 Route::post('login', ['as' => 'login', 'uses' => '\App\Http\Controllers\Controller@loginRerection']);
+Route::get('disabled-accounts', ['as' => 'disabled-accounts', 'uses' => '\App\Http\Controllers\Controller@accounts_badge']);
+
 Route::get('logout', ['as' => 'logout', 'uses' => function () {
     Session::forget('user');
     if (!Session::has('user')) {
@@ -41,3 +43,9 @@ Route::get('application/index', ['as' => 'applicationIndex', 'uses' => '\App\Htt
 Route::get('template', ['as' => 'downloadTemplate', 'uses' => '\App\Http\Controllers\ApplicationController@downloadTemplate']);
 Route::post('application/new', ['as' => 'newApplication', 'uses' => '\App\Http\Controllers\ApplicationController@add']);
 Route::post('application/upload-presentation', ['as' => 'uppresentation', 'uses' => '\App\Http\Controllers\ApplicationController@upload_presentation']);
+Route::post('application/download-presentation', ['as' => 'download-presentation', 'uses' => '\App\Http\Controllers\ApplicationController@downloadPresentation']);
+Route::post('application/submit-application', ['as'=>'submit','uses' => '\App\Http\Controllers\ApplicationController@submitApplication'  ]);
+Route::post('application/vote-up', ['as'=>'vote-up','uses' => '\App\Http\Controllers\ApplicationController@vote_up'  ]);
+Route::post('application/vote-down', ['as'=>'vote-down','uses' => '\App\Http\Controllers\ApplicationController@vote_down'  ]);
+Route::get('application/detail/{id}', ['as'=>'app-detail','uses' => '\App\Http\Controllers\ApplicationController@detail'  ]);
+Route::get('new-applications', ['as'=>'new-applications','uses' => '\App\Http\Controllers\ApplicationController@new_applications']);

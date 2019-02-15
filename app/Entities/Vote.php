@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Vote extends Model
 {
     protected $fillable = [
-        'isAccepted'
+        'isAccepted', 'user_id', 'application_id'
     ];
 
     public function application()

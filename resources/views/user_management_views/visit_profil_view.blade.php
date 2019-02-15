@@ -95,22 +95,23 @@
         @if($user->role == 'Startuper')
 
             <div class="card">
-
                 <div class="card-header d-flex d-md-inline-flex  justify-content-center">
-                    @if(!$user->application->isPresentationSubmited)
-                        <div class="d-inline-flex align-items-center">
-                            <i class="far fa-check-circle green-text fa-3x" style="margin: 1%;"></i>
+                    @if(!empty($user->application))
+                        @if($user->application->isPresentationSubmited)
+                            <form class="d-inline-flex align-items-center" method="post"
+                                  action="{{ route('download-presentation') }}">
+                                @csrf
+                                <i class="far fa-check-circle green-text fa-3x" style="margin: 1%;"></i>
 
-                            <strong class="card-title">Presentation Submited</strong>
-                        </div>
-
-                    @else
-                        <div class="d-inline-flex align-items-center">
-                            <i class="fas fa-exclamation-triangle yellow-text fa-3x " style="margin-left: 2%;"> </i>
-
-                            <strong class="card-title">Presentation Missing</strong>
-                        </div>
-                    @endif
+                                <input type="submit" class="btn btn-green" value="Download PPT">
+                                <input type="hidden" name="id" value="{{$user->application->id}}">
+                            </form>
+                        @else
+                            <div class="d-inline-flex align-items-center">
+                                <i class="fas fa-exclamation-triangle yellow-text fa-3x " style="margin-left: 2%;"> </i>
+                                <strong class="card-title">Presentation Missing</strong>
+                            </div>
+                        @endif
 
                 </div>
                 <div class="card-body">
@@ -264,11 +265,30 @@
 
 
                 </div>
+                <div class="d-inline-flex justify-content-end card-footer" id="voteSubmition"
+                     xmlns:v-bind="http://www.w3.org/1999/xhtml">
+                    <form action="{{ route('submit') }}" method="post">
+                        @csrf
+                        <input type="hidden" value="{{$user->application->id}}" name="id">
+                        <input :disabled="isPresentation==0 " type="submit"
+                               class="btn btn-primary" value="Submit to vote">
+                    </form>
+                </div>
             </div>
         @endif
+
+    @endif
 
     @else
         <script> window.location = "/user_management"; </script>
     @endif
-
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.2/dist/vue.js"></script>
+    @if(!empty($user->application))
+        <script>
+            new Vue({
+                el: "#voteSubmition",
+                data: {isPresentation: {{ $user->application->isPresentationSubmited }} }
+            })
+        </script>
+    @endif
 @endsection
