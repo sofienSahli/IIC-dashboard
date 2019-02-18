@@ -81,6 +81,7 @@
         @yield('content')
     </div>
 </div>
+<script src="https://js.pusher.com/4.3/pusher.min.js"></script>
 
 <!-- JQuery -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

@@ -66,9 +66,7 @@
                     </span>
             </a>
 
-            <a class="list-group-item "><i class="far fa-address-card"></i>App. Reviews <span
-                        class="badge badge-primary"
-                        style="margin-left: 2px;">4</span> </a>
+            <a class="list-group-item "><i class="far fa-address-card"></i>App. Reviews </a>
 
             @if(Session::get('user')->role =='Super Admin')
                 <a class="list-group-item d-md-inline-flex" href="{{route('user_management')}}"><i
@@ -98,10 +96,8 @@
 </div>
 @if(Session::get('user')->role =='Super Admin')
     <script src="https://js.pusher.com/4.3/pusher.min.js"></script>
-    <script>
+    <script type="text/javascript">
 
-        // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
 
         var pusher = new Pusher('fa2d81006f4d56b91ca3', {
             cluster: 'ap2',

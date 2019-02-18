@@ -109,13 +109,11 @@
                     </select>
                 </div>
                 <div class="input-group col-auto">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                    </div>
+
                     <div class="custom-file">
-                        <input type="file" name="image" class="custom-file-input" id="inputGroupFile01"
-                               aria-describedby="inputGroupFileAddon01">
-                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        <input id="image_file" type="file" name="image" class="custom-file-input"
+                               aria-describedby="inputGroupFileAddon01" oninput="filesubmited()">
+                        <label id="file-text" class="custom-file-label" for="image_file">Choose file</label>
                     </div>
                 </div>
                 <!--        ROLE   -->
@@ -149,8 +147,7 @@
             </div>
             <div class="col-6 d-flex  centered-div">
                 <a href="{{route('login')}}" class="col-5">
-                    <button class="btn btn-secondary" type="button" style="margin-left: 5%; ">Already member ?
-                    </button>
+                    <button class="btn btn-secondary" type="button" style="margin-left: 5%; ">Already member ?</button>
                 </a>
             </div>
             <div class="col-6 align-content-center centered-div">
