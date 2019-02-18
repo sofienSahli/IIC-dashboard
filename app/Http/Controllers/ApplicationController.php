@@ -112,7 +112,8 @@ class ApplicationController extends BaseController
                 DB::table('applications')
                     ->where('id', $request->all()['id'])
                     ->update(['isPresentationSubmited' => "1", 'presentation_file' => $file_path]);
-                return redirect('login');
+                $user = Session::get('user');
+                return view('application_management_views.submit_presentation_view', ["title" => 'Dashboard', 'user' => $user]);
             }
 
 

@@ -49,7 +49,7 @@
                 <ul class="navbar-nav ml-auto ">
                     <!-- Authentication Links -->
                     @guest
-                        <li><a class="nav-link navabar-menu menu" href="{{ route('register') }}">Register</a></li>
+                       <!-- <li></li> -->
                     @else
                         <li class="nav-item dropdown navabar-menu">
                             <a id="navbarDropdown " class="nav-link dropdown-toggle" href="#" role="button"

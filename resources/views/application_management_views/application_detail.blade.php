@@ -70,7 +70,7 @@
 
                 @if($user->role == "Super Admin")
 
-                    <div class="img-thumbnail">
+                    <div class="img-thumbnailp">
                         <canvas id="barChart"></canvas>
                     </div>
                     <script>

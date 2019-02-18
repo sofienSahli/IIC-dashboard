@@ -29,11 +29,18 @@
                 </div>
                 <div class="card-footer">
                     <div class=" d-flex justify-content-center">
-                        <a href="#" class="btn btn-secondary col-auto">Forgot your
-                            password ?</a>
-                        <input class="btn btn-primary col-auto" value="Log in" type="submit">
+                        <a href="{{ route('register') }}">
+                            <button class="btn btn-deep-orange col-auto" type="button">
+                                Register
+                            </button>
+                        </a>
+                        <button class="btn btn-primary col-auto" type="submit"> Log in</button>
+
+
                     </div>
+
                 </div>
+
             </div>
         </form>
 
