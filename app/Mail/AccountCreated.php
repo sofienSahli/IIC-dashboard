@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class OrderShipped extends Mailable
+class AccountCreated extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,9 +18,8 @@ class OrderShipped extends Mailable
      *
      * @return void
      */
-    public function __construct($mail)
+    public function __construct()
     {
-        $this->mail = $mail;
     }
 
     /**
@@ -30,14 +29,7 @@ class OrderShipped extends Mailable
      */
     public function build()
     {
-        $attachmentFile = storage_path('template_presentation.pptx');
-
         return $this->from('sofien.sahli@esprit.tn')
-            ->view('mails_views.notification_mail_view')
-            ->attach($attachmentFile, [
-                'as' => 'template_presentation.pptx',
-                'mime' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
-
-            ]);
+            ->markdown('mails_views.notification_mail_view');
     }
 }

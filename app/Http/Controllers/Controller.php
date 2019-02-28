@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Events\AccountCreated;
+use App\Mail\NewAccountMail;
+use App\Mail\StartuperAccountActivated;
 use Illuminate\Support\Facades\DB;
 
 use App\Entities\User;
@@ -11,7 +13,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
-use App\Mail\OrderShipped;
+use App\Mail\AccountCreated as AccountCreation;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Pusher\Pusher;
@@ -119,11 +121,26 @@ class Controller extends BaseController
         $user->isActive = false;
         $user->save();
         $this->notify();
+        $this->sendMailToAdmin($user);
         if ($user->role == 'Startuper') {
             return view("application_management_views.apply", ['user' => $user]);
         }
         return redirect('login');
 
+    }
+
+    function notifyStartuperAccountActivation($user)
+    {
+        Mail::to($user->email)->queue(new StartuperAccountActivated($user));
+
+    }
+
+    function sendMailToAdmin(User $use)
+    {
+        $user = User::where("role", "=", "Super Admin")->get();
+        foreach ($user as $u) {
+            Mail::to($u->email)->queue(new NewAccountMail($use));
+        }
     }
 
     function notify()
@@ -178,6 +195,8 @@ class Controller extends BaseController
         DB::table('users')
             ->where('id', $request->all()['id'])
             ->update(['isActive' => "1"]);
+        $user = User::where("id", "=", $request->all()['id']);
+        $this->notifyStartuperAccountActivation($user);
         return redirect('user_management');
     }
 
@@ -192,6 +211,15 @@ class Controller extends BaseController
     {
         $user = User::find($request->all()['id']);
         return view('user_management_views.visit_profil_view', ['title' => $user->name . "'s Profile", 'user' => $user]);
+    }
+
+    function find_users(Request $request)
+    {
+        $query = $request->all()['query'];
+        $user = User::where('name', 'like', '%' . $query . '%')->orWhere('last_name', 'like', '%' . $query . '%')->get();
+        return view('user_management_views.user_management', ['title' => 'New accounts', 'users' => $user]);
+
+
     }
 }
 

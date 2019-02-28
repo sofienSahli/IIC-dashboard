@@ -9,10 +9,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>IIC</title>
+
     <link rel="shortcut icon" href="{{asset("images/logo.png")}}" type="image/x-icon"/>
 
     <!-- Styles -->
     <link href="{{ asset('css/stylesheet_main_layout.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
     <link rel="stylesheet"
@@ -28,8 +30,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.0/css/mdb.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="bmd-layout-container bmd-drawer-f-l bmd-drawer-overlay" style="height: 100vh;">
-    <header class="bmd-layout-header">
+<div class="bmd-layout-container bmd-drawer-f-l bmd-drawer-overlay " style="height: 100vh;">
+    <header class="bmd-layout-header ">
         <div class="navbar navbar-light bg-faded  d-flex justify-content-start">
             <button class="navbar-toggler" type="button" data-toggle="drawer" data-target="#dw-s1">
                 <span class="sr-only">Toggle drawer</span>
@@ -40,11 +42,11 @@
             @if(!empty($title))
                 <h3 style="margin-left: 4px;">{{ $title }} </h3>
             @endif
-            <ul class="nav navbar-nav ">
-                <li class="nav-item"></li>
-            </ul>
         </div>
+
+
     </header>
+
     <div id="dw-s1" class="bmd-layout-drawer bg-faded">
         <header class="d-flex justify-content-center shadow">
             @if(Session::has('user')   )
@@ -56,9 +58,9 @@
                 <button class="btn-primary"> {{Session::get('user')->email }}</button>
 
         </header>
+
         <ul class="list-group ">
             <a class="list-group-item " href="{{route('dashboard')}}"><i class="fas fa-chart-line"></i> Dashboard </a>
-
 
             <a class="list-group-item " href="{{route('applicationIndex')}}">
                 <i class="fas fa-table"></i>
@@ -70,9 +72,52 @@
 
             @if(Session::get('user')->role =='Super Admin')
                 <a class="list-group-item d-md-inline-flex" href="{{route('user_management')}}"><i
-                            class="fas fa-users"></i> New accounts
+                            class="fas fa-users"></i> All accounts
                     <span class="badge badge-primary" style="margin: 1%;" id="accounts_badge"> 0</span>
                 </a>
+
+                <script src="https://js.pusher.com/4.3/pusher.min.js"></script>
+                <script type="text/javascript">
+
+
+                    var pusher = new Pusher('fa2d81006f4d56b91ca3', {
+                        cluster: 'ap2',
+                        forceTLS: true
+                    });
+
+                    var channel = pusher.subscribe('account-creation');
+                    channel.bind('my-event', function (data) {
+                        notifyMe();
+                    });
+
+                    document.addEventListener('DOMContentLoaded', function () {
+                        if (!Notification) {
+                            alert('Desktop notifications not available in your browser. Try Chromium.');
+                            return;
+                        }
+
+                        if (Notification.permission !== "granted")
+                            Notification.requestPermission();
+                    });
+
+
+                    function notifyMe() {
+                        if (Notification.permission !== "granted")
+                            Notification.requestPermission();
+                        else {
+                            var notification = new Notification("New Account creation", {
+                                icon: '{{ asset('images/logo.png') }}',
+                                body: "new Account has been created",
+                            });
+
+                            notification.onclick = function () {
+                                window.open('{{ route('dashboard') }}');
+                            };
+
+                        }
+                    }
+
+                </script>
             @endif
             @else
                 <script> window.location = "/login"; </script>
@@ -87,57 +132,17 @@
     <script src="{{asset('js/Chart.js')}}" type="text/javascript"></script>
 
     <main class="bmd-layout-content" style="height: 100%; width: 100%;">
-        <div class="container-fluid">
+        <div class="container-fluid" style=" padding: 0;">
 
 
             @yield('content')
+
+
         </div>
     </main>
 </div>
-@if(Session::get('user')->role =='Super Admin')
-    <script src="https://js.pusher.com/4.3/pusher.min.js"></script>
-    <script type="text/javascript">
-
-
-        var pusher = new Pusher('fa2d81006f4d56b91ca3', {
-            cluster: 'ap2',
-            forceTLS: true
-        });
-
-        var channel = pusher.subscribe('account-creation');
-        channel.bind('my-event', function (data) {
-            notifyMe();
-        });
-
-        document.addEventListener('DOMContentLoaded', function () {
-            if (!Notification) {
-                alert('Desktop notifications not available in your browser. Try Chromium.');
-                return;
-            }
-
-            if (Notification.permission !== "granted")
-                Notification.requestPermission();
-        });
-
-
-        function notifyMe() {
-            if (Notification.permission !== "granted")
-                Notification.requestPermission();
-            else {
-                var notification = new Notification("New Account creation", {
-                    icon: '{{ asset('images/logo.png') }}',
-                    body: "new Account has been created",
-                });
-
-                notification.onclick = function () {
-                    window.open('{{ route('dashboard') }}');
-                };
-
-            }
-        }
-
-    </script>
-@endif
+<script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js">
+</script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
@@ -152,7 +157,6 @@
 <script> $(document).ready(function () {
         $('body').bootstrapMaterialDesign();
     });</script>
-<!-- Bootstrap tooltips -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 <!-- Bootstrap core JavaScript -->
 <script type="text/javascript"

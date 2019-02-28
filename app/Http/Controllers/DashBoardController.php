@@ -11,8 +11,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Entities\User;
-use App\Mail\OrderShipped;
-use Illuminate\Foundation\Bus\DispatchesJobs;
+use App\Mail\AccountCreated;
+
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 

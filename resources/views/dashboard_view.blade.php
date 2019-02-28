@@ -23,13 +23,13 @@
             </div>
 
         </div>
-        <div class="col-11 " style="margin: 2% 5%;">
+        <div class="col-11 " style="margin: 2% 5%; display: none;">
             <div class="card">
                 <div class="card-header ">
                     <h3 class="card-title"> Attendancy today</h3>
 
                 </div>
-                <div class="card-body">
+                <div class="card-body ">
                     <table id="table" class="table table-hover">
                         <thead>
                         <tr>

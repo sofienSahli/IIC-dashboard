@@ -1,11 +1,11 @@
 @extends("app")
 @section('content')
     <div class="row d-flex justify-content-center " style="margin-top: 5%;">
-        <form class="col-6" action="{{route('login')}}" method="post">
+        <form class="col-auto" action="{{route('login')}}" method="post">
             @csrf
-            <div class="card shadow ">
+            <div class="card shadow">
                 <div class="card-header" style="background: #1d68a7; color: white;">
-                    <h2>Login</h2>
+                    <h2> Login </h2>
                 </div>
 
                 <div class="card-body">
@@ -30,11 +30,11 @@
                 <div class="card-footer">
                     <div class=" d-flex justify-content-center">
                         <a href="{{ route('register') }}">
-                            <button class="btn btn-deep-orange col-auto" type="button">
+                            <button class="btn btn-deep-orange " type="button">
                                 Register
                             </button>
                         </a>
-                        <button class="btn btn-primary col-auto" type="submit"> Log in</button>
+                        <button class="btn btn-primary " type="submit"> Log in</button>
 
 
                     </div>

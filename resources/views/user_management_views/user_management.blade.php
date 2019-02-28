@@ -1,5 +1,17 @@
 @extends('main_app')
 @section('content')
+    <nav class="navbar navbar-dark default-color-dark">
+        <h4 style="color: white;"> All accounts</h4>
+        <form class="form-inline my-2 my-lg-0 ml-auto" action="{{ route('find-user') }}" method="post">
+            <div class="md-form">
+                @csrf
+                <input type="text" id="form1" class="form-control col-auto" name="query" required
+                       placeholder="User Name">
+
+            </div>
+            <button class="btn btn-white btn-md my-2 my-sm-0 ml-3" type="submit">Search</button>
+        </form>
+    </nav>
     <div id="users_management" xmlns:v-on="http://www.w3.org/1999/xhtml">
 
 
@@ -36,7 +48,7 @@
                         @foreach ($users as $user)
                             @if($user->role == "Admin")
                                 <tr>
-                                    <td><img src="{{ asset($user->profile_picture) }}" class="img-fluid" width="150px;">
+                                    <td><img src="{{ asset($user->profile_picture) }}" class="img-fluid">
                                     </td>
 
                                     <td><a href="/">{{ $user->name . " ". $user->last_name  }} </a></td>
@@ -71,6 +83,12 @@
                                             <input type="hidden" name="id" value="{{ $user->id }}">
                                             <input type="submit" class="btn btn-primary" value="Full profile">
                                         </form>
+
+                                        <a href="{{ url('message/'.$user->id) }}">
+                                            <button class="btn btn-amber col-auto"><i class="fas fa-comment-alt"></i>
+                                                Message
+                                            </button>
+                                        </a>
                                     </td>
                                 </tr>
                             @endif
@@ -141,6 +159,12 @@
                                         <input type="hidden" name="id" value="{{ $user->id }}">
                                         <input type="submit" class="btn btn-primary" value="Full profile">
                                     </form>
+
+                                    <a href="{{ url('message/'.$user->id) }}">
+                                        <button class="btn btn-amber col-auto"><i class="fas fa-comment-alt"></i>
+                                            Message
+                                        </button>
+                                    </a>
                                 </td>
                             </tr>
                         @endif

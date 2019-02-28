@@ -15,8 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+// Testing routes
+Route::get('mail', ['uses' => '\App\Http\Controllers\Controller@notifyStartuperAccountActivation']);
+
+
 //User management routes
 Route::get('user_management', ['as' => 'user_management', 'uses' => '\App\Http\Controllers\Controller@user_management']);
+Route::post('find_users', ['as' => 'find-user', 'uses' => '\App\Http\Controllers\Controller@find_users']);
 Route::post('ban_user', ['as' => 'ban_account', 'uses' => '\App\Http\Controllers\Controller@ban_account']);
 Route::post('activate_account', ['as' => 'activate_account', 'uses' => '\App\Http\Controllers\Controller@activate_account']);
 Route::post('visit_profile', ['as' => 'visit_profile', 'uses' => '\App\Http\Controllers\Controller@visit_profile']);
@@ -49,3 +55,5 @@ Route::post('application/vote-up', ['as'=>'vote-up','uses' => '\App\Http\Control
 Route::post('application/vote-down', ['as'=>'vote-down','uses' => '\App\Http\Controllers\ApplicationController@vote_down'  ]);
 Route::get('application/detail/{id}', ['as'=>'app-detail','uses' => '\App\Http\Controllers\ApplicationController@detail'  ]);
 Route::get('new-applications', ['as'=>'new-applications','uses' => '\App\Http\Controllers\ApplicationController@new_applications']);
+
+Route::get('message/{id}', ['as' => 'send-message', 'uses' => '\App\Http\Controllers\MessagerieController@sendMessage']);

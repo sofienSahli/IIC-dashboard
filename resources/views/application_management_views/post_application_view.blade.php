@@ -9,8 +9,8 @@
                 </div>
                 <div class="card-body">
                     <p>
-                    In order to finish your application process you are invited to upload a PPT presentation on your
-                    plateforme.
+                        Thank you for your application. You will recieve an email with further details shortly.
+
                     </p>
                     <p> In case your download didn't start yet.</p>
 
@@ -20,9 +20,6 @@
                 <div class="card-footer d-md-flex justify-content-center">
 
                     <br>
-                    <a href="{{route('downloadTemplate')}}">
-                        <button class="col-auto btn-secondary btn"> Download again</button>
-                    </a>
                     <a href="{{route('login')}}">
                         <button class="col-auto btn-primary btn"> Proceed to login</button>
                     </a>

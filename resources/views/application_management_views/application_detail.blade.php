@@ -1,11 +1,18 @@
 @extends('main_app')
 @section('content')
     <div class="card" style="margin: 5%;">
-        <div class="card-header ">
-
-
-            <h5 class="card-title">{{ $app->user->name ." ".$app->user->last_name}}</h5>
-            <h6 class="card-subtitle mb-2 text-muted"> {{ $app->user->email }}</h6>
+        <div class="card-header  d-inline-flex">
+            <div>
+                <h5 class="card-title">{{ $app->user->name ." ".$app->user->last_name}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted"> {{ $app->user->email }}</h6>
+            </div>
+            @if($user->role == "Super Admin")
+                <div class="d-inline-flex justify-content-end" style="width: 100%;">
+                    <a href="{{ url('message/'.$app->user->id) }}">
+                        <button class="btn btn-primary"><i class="fas fa-comment-alt"></i> Message</button>
+                    </a>
+                </div>
+            @endif
         </div>
         <div class="card-body">
             <div class="card-columns">
@@ -137,6 +144,7 @@
         </div>
 
     </div>
+
 
 
 @endsection
