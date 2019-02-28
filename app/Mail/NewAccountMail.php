@@ -31,7 +31,6 @@ class NewAccountMail extends Mailable
      */
     public function build()
     {
-        return $this->from('sofien.sahli@esprit.tn')
-            ->markdown('mails_views.notification_mail_view');
+        return $this->markdown('mails_views.notification_mail_view');
     }
 }

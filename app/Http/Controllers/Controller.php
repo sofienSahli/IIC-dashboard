@@ -137,7 +137,7 @@ class Controller extends BaseController
 
     function sendMailToAdmin(User $use)
     {
-        $user = User::where("role", "=", "Super Admin")->get();
+        $user = User::where("role", "=", "Super Admin")->where("isActive", "=", 1)->get();
         foreach ($user as $u) {
             Mail::to($u->email)->queue(new NewAccountMail($use));
         }
@@ -195,7 +195,7 @@ class Controller extends BaseController
         DB::table('users')
             ->where('id', $request->all()['id'])
             ->update(['isActive' => "1"]);
-        $user = User::where("id", "=", $request->all()['id']);
+        $user = User::where("id", "=", $request->all()['id'])->first();
         $this->notifyStartuperAccountActivation($user);
         return redirect('user_management');
     }
