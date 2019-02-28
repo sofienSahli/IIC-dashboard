@@ -5,11 +5,11 @@
             Dear {{ $user->name }} ,
         @endslot
 
-        This is to acknowledge receipt of your application for Incubation at IIC.
+        This is to acknowledge receipt of your application/registration for Incubation at IIC.
 
-        Kindly prepare a presentation as per attached format and submit the same by 01/03/19 01:00 pm.
+        Kindly, follow this link for login to your respective dashboard for further undertaking.
 
-        Note: You can change the format of the presentation but all the details asked in the presentation should be covered
+        {{ route('login') }}
 
         @slot('footer')
             Regards,<br>

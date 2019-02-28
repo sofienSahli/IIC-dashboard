@@ -7,7 +7,7 @@
             <h3 style="color: red; margin-left: 5%;">{{$message}}</h3>
         @endif
         <form class="col-12 form-row " id="inscription_form" method="post" action="{{route('sign_in')}}"
-              enctype="multipart/form-data" >
+              enctype="multipart/form-data">
             @csrf
 
             <div class="col-6 align-items-lg-start">
@@ -112,7 +112,7 @@
 
                     <div class="custom-file">
                         <input id="image_file" type="file" name="image" class="custom-file-input"
-                               aria-describedby="inputGroupFileAddon01" oninput="filesubmited()">
+                               aria-describedby="inputGroupFileAddon01" oninput="filesubmited()" required>
                         <label id="file-text" class="custom-file-label" for="image_file">Choose file</label>
                     </div>
                 </div>
