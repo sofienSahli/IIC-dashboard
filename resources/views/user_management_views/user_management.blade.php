@@ -121,7 +121,7 @@
                     @foreach ($users as $user)
                         @if($user->role == "Startuper")
                             <tr>
-                                <td><img src="{{ asset($user->profile_picture) }}" class="img-fluid" width="150px;">
+                                <td><img src="{{ asset($user->profile_picture) }}" class="img-fluid" width="100px">
                                 </td>
 
                                 <td><a href="/">{{ $user->name . " ". $user->last_name  }} </a></td>

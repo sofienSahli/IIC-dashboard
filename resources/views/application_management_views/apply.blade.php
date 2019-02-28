@@ -19,7 +19,7 @@
                     <div class="form-group">
                         <label class="myfuckinglabel" for="compagny_number">Compagny number if exist</label>
                         <input placeholder="Compagny number" name="compagny_number" type="text" class="form-control"
-                               id="compagny_number">
+                               id="compagny_number" required>
                     </div>
 
 
@@ -37,7 +37,7 @@
                             field</label>
                         <input placeholder="Innovation description" name="innovation_description" type="text"
                                class="form-control"
-                               id="innovation_description">
+                               id="innovation_description" required>
                     </div>
 
                     <div class="form-group">
@@ -45,7 +45,7 @@
                             project </label>
                         <input placeholder="Innovation sector" name="innovation_sector" type="text"
                                class="form-control"
-                               id="innovation_sector">
+                               id="innovation_sector" required>
                     </div>
 
                     <div class="form-group">
@@ -54,7 +54,7 @@
                             ups/innovation project/state key innovative features </label>
                         <input placeholder="Startup description" name="startup_description" type="text"
                                class="form-control"
-                               id="startup_description">
+                               id="startup_description" required>
                     </div>
                     <!--        is started   -->
                     <fieldset class="form-check col-auto">
@@ -132,7 +132,7 @@
                                    id="tech_innov">
                         </div>
                     </div>
-                    <input type="submit" value="Apply" class="btn btn-outline-primary col-4">
+                    <input type="submit" value="Apply" class="btn btn-outline-primary ">
 
                 </div>
 

@@ -92,8 +92,8 @@
 
                 <div class="form-group col-auto ">
                     <label for="cin">Indian identification number </label>
-                    <input type="number" class="form-control" id="cin" name="cin"
-                           placeholder="Idetification number">
+                    <input type="text" class="form-control" id="cin" name="cin"
+                           placeholder="Idetification number" required>
                 </div>
 
 
