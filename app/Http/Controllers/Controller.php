@@ -57,7 +57,7 @@ class Controller extends BaseController
 
             } else if ($user->role == "Startuper") {
 
-                return view('application_management_views.submit_presentation_view', ["title" => 'Dashboard', 'user' => $user]);
+                return redirect('startuper/dashboard/');
 
             }
         }
