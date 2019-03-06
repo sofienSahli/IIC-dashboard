@@ -1,23 +1,39 @@
 @extends('main_app')
 @section('content')
-    <div class="row d-flex justify-content-start " style="margin-top: 2%; margin-bottom: 2%;"
+    <div class="row d-flex justify-content-center " style="margin-top: 2%; margin-bottom: 2%;"
          xmlns:v-on="http://www.w3.org/1999/xhtml">
 
 
-        <div class="col-4">
-            <div class="card shadow ">
-                <div class="card-header "><h4>Applications over 6 months</h4></div>
+        <div class="col-sm-6 mb-3 mb-md-0 ">
+
+            <div class="card text-white bg-info " style="max-width: 20rem;">
+                <div class="card-header">Applications</div>
                 <div class="card-body">
-                    <canvas id="barChart" style="max-width: 100%;"></canvas>
+                    <h5 class="card-title"> {{ $number_of_presentation_submited + $number_of_presentation_missing}} new
+                        Startups idea</h5>
+                    <p class="card-text text-white">
+                        {{ $number_of_presentation_submited }} Submited Preselection PPT
+                        <br>
+                        {{ $number_of_presentation_missing }} Submited Preselection PPT
+                    </p>
+                    <a href="{{ route('user_management') }}" class="btn btn-yellow">Users management</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 col-sm-12 col-lg-4 col-md-6">
+            <div class="card shadow ">
+                <div class="card-header">Innovations by fields</div>
+                <div class="card-body">
+                    <canvas id="barChart" style="width: 100%; height: 100%; "></canvas>
                 </div>
 
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-4 col-sm-12 col-lg-4 col-md-6">
             <div class="card shadow ">
-                <div class="card-header card-title"><h4>Most offered help </h4></div>
+                <div class="card-header">Most offered help</div>
                 <div class="card-body">
-                    <canvas id="myChart2"></canvas>
+                    <canvas id="myChart2" style="width: 100%; height: 100%;"></canvas>
                 </div>
 
             </div>
@@ -72,14 +88,45 @@
                 </div>
                 <div class="card-footer d-md-flex justify-content-end" id="mutton">
 
-                    <button  type="button" class="btn  btn-blue-grey">More</button>
+                    <button type="button" class="btn  btn-blue-grey">More</button>
                 </div>
             </div>
         </div>
-        <script src="https://unpkg.com/vue@2.4.2"></script>
+        <script src="https://unpkg.com/vue@2.4.2">
+        </script>
 
-        <script src="{{ asset('js/dashboard.js') }}">
-
+        <script>
+            var ctx = document.getElementById("barChart").getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ["Product", "Process", "Services"],
+                    datasets: [{
+                        label: '# of Stratup Applications',
+                        data: [5, 2, 3],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
 
         </script>
         <script>

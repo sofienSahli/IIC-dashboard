@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 class Deadline extends Model
 {
     protected $fillable = [
-        'isReminded', 'deadline_dead', 'application_id', 'reminder_text', 'post_deadline'
+        'is_reminded', 'deadline_date', 'application_id', 'reminder_text', 'post_deadline_date'
     ];
 
     public function application()

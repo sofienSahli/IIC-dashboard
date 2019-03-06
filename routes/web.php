@@ -20,7 +20,7 @@ Route::get('/', function () {
 Route::get('mail', ['uses' => '\App\Http\Controllers\Controller@notifyStartuperAccountActivation']);
 
 
-//User management routes
+//User management routes  Controller routes
 Route::get('user_management', ['as' => 'user_management', 'uses' => '\App\Http\Controllers\Controller@user_management']);
 Route::post('find_users', ['as' => 'find-user', 'uses' => '\App\Http\Controllers\Controller@find_users']);
 Route::post('ban_user', ['as' => 'ban_account', 'uses' => '\App\Http\Controllers\Controller@ban_account']);
@@ -40,11 +40,11 @@ Route::get('logout', ['as' => 'logout', 'uses' => function () {
     }
 }]);
 
-
+// Dashboard routes
 Route::get('dashboard', ['as' => 'dashboard', 'uses' => '\App\Http\Controllers\DashBoardController@index']);
 
 
-
+//Application controllers
 Route::get('application/index', ['as' => 'applicationIndex', 'uses' => '\App\Http\Controllers\ApplicationController@index']);
 Route::get('template', ['as' => 'downloadTemplate', 'uses' => '\App\Http\Controllers\ApplicationController@downloadTemplate']);
 Route::post('application/new', ['as' => 'newApplication', 'uses' => '\App\Http\Controllers\ApplicationController@add']);

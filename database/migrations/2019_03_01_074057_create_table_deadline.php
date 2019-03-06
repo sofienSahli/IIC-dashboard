@@ -13,11 +13,11 @@ class CreateTableDeadline extends Migration
      */
     public function up()
     {
-        Schema::create('table_deadline', function (Blueprint $table) {
+        Schema::create('deadlines', function (Blueprint $table) {
             $table->increments('id');
             $table->dateTime('deadline_date');
             $table->dateTime('post_deadline_date')->default(null);
-            $table->dateTime('reminder_text')->default(null);
+            $table->string('reminder_text')->default(null);
             $table->integer('application_id')->unsigned();
             $table->foreign('application_id')->references('id')->on('applications');
             $table->boolean('is_reminded')->default(false);

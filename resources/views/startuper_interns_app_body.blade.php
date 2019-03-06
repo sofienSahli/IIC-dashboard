@@ -50,14 +50,7 @@
             </ul>
             <ul class="navbar-nav nav-flex-icons">
                 <li class="nav-item">
-                    <a class="nav-link"><i class="fab fa-facebook-f"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link"><i class="fab fa-twitter"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link"><i class="fab fa-instagram"></i></a>
-                </li>
+                    <a class="nav-link" href="{{ route('logout') }}"> log out </a></li>
             </ul>
         </div>
     </nav>
@@ -79,6 +72,7 @@
 <script> $(document).ready(function () {
         $('body').bootstrapMaterialDesign();
     });</script>
+
 <!-- Bootstrap tooltips -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
 <!-- Bootstrap core JavaScript -->

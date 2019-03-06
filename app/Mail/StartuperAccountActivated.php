@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Entities\Deadline;
 use App\Entities\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -12,15 +13,18 @@ class StartuperAccountActivated extends Mailable
 {
     use Queueable, SerializesModels;
     public $user;
+    public $deadline;
 
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param User $user
+     * @param Deadline $deadline
      */
-    public function __construct(User $user)
+    public function __construct(User $user, Deadline $deadline)
     {
         $this->user = $user;
+        $this->deadline = $deadline;
         //
     }
 

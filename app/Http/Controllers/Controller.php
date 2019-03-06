@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Applications;
+use App\Entities\Deadline;
 use App\Events\AccountCreated;
 use App\Mail\NewAccountMail;
 use App\Mail\StartuperAccountActivated;
 use Illuminate\Support\Facades\DB;
-
+use Carbon\Carbon;
 use App\Entities\User;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
@@ -131,7 +133,17 @@ class Controller extends BaseController
 
     function notifyStartuperAccountActivation($user)
     {
-        Mail::to($user->email)->queue(new StartuperAccountActivated($user));
+        $application = Applications::where("user_id", "=", $user->id)->first();
+        $date = Carbon::today();
+        $d = Carbon::today();
+        $deadline = new Deadline;
+        $deadline->is_reminded = false;
+        $deadline->deadline_date = $date->addWeek();
+        $deadline->application_id = $application->id;
+        $deadline->reminder_text = "Don't forget your deadline";
+        $deadline->post_deadline_date = $d->addWeeks(2);
+        $deadline->save();
+        Mail::to($user->email)->queue(new StartuperAccountActivated($user, $deadline));
 
     }
 
@@ -196,7 +208,11 @@ class Controller extends BaseController
             ->where('id', $request->all()['id'])
             ->update(['isActive' => "1"]);
         $user = User::where("id", "=", $request->all()['id'])->first();
-        $this->notifyStartuperAccountActivation($user);
+
+        if ($user->role == "Startuper")
+            $this->notifyStartuperAccountActivation($user);
+
+
         return redirect('user_management');
     }
 
