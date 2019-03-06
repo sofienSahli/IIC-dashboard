@@ -23,6 +23,7 @@ class PresentationSubmited extends Mailable
         //
         $this->user = $user;
     }
+    // dljahdaz
 
     /**
      * Build the message.
