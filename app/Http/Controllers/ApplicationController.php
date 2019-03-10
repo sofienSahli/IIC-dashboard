@@ -83,13 +83,6 @@ class ApplicationController extends BaseController
         $application->user_id = $data['user'];
         $application->save();
 
-        $file = public_path() . "/storage/template_presentation.pptx";
-
-        $headers = array(
-            'Content-Type: application/vnd.openxmlformats-officedocument.presentationml.presentation',
-        );
-
-        response()->download($file, 'template.pptx', $headers);
         return view('application_management_views.post_application_view');
     }
 

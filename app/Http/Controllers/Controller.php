@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Entities\Category;
 use App\Entities\Applications;
 use App\Entities\Deadline;
 use App\Events\AccountCreated;
@@ -234,7 +235,16 @@ class Controller extends BaseController
         $query = $request->all()['query'];
         $user = User::where('name', 'like', '%' . $query . '%')->orWhere('last_name', 'like', '%' . $query . '%')->get();
         return view('user_management_views.user_management', ['title' => 'New accounts', 'users' => $user]);
+    }
 
+    public function test()
+    {
+        $cat = Category::find(1);
+        $app = Applications::find(3);
+        $cat->application()->save($app);
+
+
+        return $app->category;
 
     }
 }

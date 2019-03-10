@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 
 // Testing routes
-Route::get('mail', ['uses' => '\App\Http\Controllers\Controller@notifyStartuperAccountActivation']);
+Route::get('mail', ['uses' => '\App\Http\Controllers\Controller@test']);
 
 
 //User management routes  Controller routes

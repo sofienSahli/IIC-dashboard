@@ -21,4 +21,8 @@ class Applications extends Model
         return $this->belongsTo('App\Entities\User');
     }
 
+    public function category()
+    {
+        return $this->belongsToMany('App\Entities\Category');
+    }
 }
