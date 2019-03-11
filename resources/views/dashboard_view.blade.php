@@ -10,11 +10,11 @@
                 <div class="card-header">Applications</div>
                 <div class="card-body">
                     <h5 class="card-title"> {{ $number_of_presentation_submited + $number_of_presentation_missing}} new
-                        Startups idea</h5>
+                        Startup ideas</h5>
                     <p class="card-text text-white">
                         {{ $number_of_presentation_submited }} Submited Preselection PPT
                         <br>
-                        {{ $number_of_presentation_missing }} Submited Preselection PPT
+                        {{ $number_of_presentation_missing }} Missing Preselection PPT
                     </p>
                     <a href="{{ route('user_management') }}" class="btn btn-yellow">Users management</a>
                 </div>
@@ -137,7 +137,7 @@
                 data: {
                     labels: ["Technical Menthorship", "Workspace", "Laboratory", "Internet", "Funds"],
                     datasets: [{
-                        data: [{{  $mento_need}} , 0, {{$lab_need}}, {{$internet_need}}, 0],
+                        data: [{{$mento_need}} , 0, {{$lab_need}}, {{$internet_need}}, 0],
                         backgroundColor: [
                             '#4CAF50',
                             '#e1b12c',

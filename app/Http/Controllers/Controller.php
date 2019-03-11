@@ -8,6 +8,7 @@ use App\Entities\Deadline;
 use App\Events\AccountCreated;
 use App\Mail\NewAccountMail;
 use App\Mail\StartuperAccountActivated;
+use App\Entities\Message;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Entities\User;
@@ -239,12 +240,9 @@ class Controller extends BaseController
 
     public function test()
     {
-        $cat = Category::find(1);
-        $app = Applications::find(3);
-        $cat->application()->save($app);
 
-
-        return $app->category;
+        $m = Message::find(1);
+        return $m->receiver;
 
     }
 }

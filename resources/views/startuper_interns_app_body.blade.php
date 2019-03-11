@@ -13,6 +13,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/stylesheet_main_layout.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/timeline.css') }}" rel="stylesheet">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
     <link rel="stylesheet"
