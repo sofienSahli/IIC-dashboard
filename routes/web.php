@@ -55,8 +55,11 @@ Route::post('application/vote-up', ['as'=>'vote-up','uses' => '\App\Http\Control
 Route::post('application/vote-down', ['as'=>'vote-down','uses' => '\App\Http\Controllers\ApplicationController@vote_down'  ]);
 Route::get('application/detail/{id}', ['as'=>'app-detail','uses' => '\App\Http\Controllers\ApplicationController@detail'  ]);
 Route::get('new-applications', ['as'=>'new-applications','uses' => '\App\Http\Controllers\ApplicationController@new_applications']);
-Route::get('message/{id}', ['as' => 'send-message', 'uses' => '\App\Http\Controllers\MessagerieController@sendMessage']);
 
 
 Route::get('startuper/dashboard', ['as' => 'startuper/dashboard', 'uses' => '\App\Http\Controllers\StartuperDasboardController@index']);
 
+
+// Messagerie Controller Routes
+Route::get('message/{id}', ['as' => 'send-message', 'uses' => '\App\Http\Controllers\MessagerieController@index']);
+Route::get('startup/messages', ['as' => 'startup-message', 'uses' => '\App\Http\Controllers\MessagerieController@startuper_index']);

@@ -17,7 +17,8 @@
         </div>
 
 
-        <div class="col-6 d-inline-flex justify-content-center" style="padding-top: 5%;">
+        <div class="col-3 col-sm-12 col-lg-3  col-md-3 col-12 d-inline-flex justify-content-center"
+             style="padding-top: 5%;">
             <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
                 <div class="card-header">Deadline</div>
                 <div class="card-body">
@@ -31,18 +32,25 @@
         </div>
 
 
-        </br>
-        <div class="col-6 ">
-            <img src="{{asset('images/logo.png')}}" class="img-fluid" width="75px;"
-                 style="padding: 1%; margin: 1%;">
-            <p>
-                <strong> Farhad Hachad :</strong>
-                last sumbmited post will go here and that's will be displayed for future use
-            </p>
+        <div class="col-3 col-sm-12 col-lg-3 col-md-3 col-12 d-inline-flex justify-content-center"
+             style="padding-top: 5%;">
+            <div class="card text-white bg-info mb-3" style="max-width: 20rem;">
+                <div class="card-header">Communication System</div>
+                <div class="card-body">
+                    <h5 class="card-title d-inline-flex">
+                        <p class="red-text"
+                           style="margin-right: 2px;"> {{ $unreaded_messages }}</p>
+                        <p class="font-weight-lighter"> New messages</p></h5>
+                    <br>
+                    <a href="{{ route('startup-message') }}">
+                        <button class="btn btn-yellow"> Menagerie</button>
+                    </a>
+                </div>
+            </div>
+
         </div>
 
-
-        <div class="col-6">
+        <div class="col-6 col-sm-12 col-md-6 col-xl-6 col-12 " style="margin-top: 5%;">
             <form action="{{ route('uppresentation') }}" enctype="multipart/form-data" method="post">
 
                 <div class="card ">

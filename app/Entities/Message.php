@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     protected $fillable = [
-        'id_sender', 'id_receiver', 'content_type', 'message', 'isReaded', 'isDelivered', 'file_path', 'isFile'
+        'sender_id', 'receiver_id', 'content_type', 'message', 'isReaded', 'isDelivered', 'file_path', 'isFile'
     ];
 
     public function sender()

@@ -28,15 +28,16 @@ class StartuperDasboardController extends BaseController
             $user = Session::get('user');
             $application = Applications::where('user_id', '=', $user->id)->first();
             $deadline = Deadline::where('application_id', '=', $application->id)->first();
-            $positive_votes = DB::table('votes')->where('isAccepted', '=', 1)->count();
-            $negative_votes = DB::table('votes')->where('isAccepted', '=', 0)->count();
+            $unreaded_messages = DB::table('messages')
+                ->where('receiver_id', '=', $user->id)
+                ->where('isReaded', '=', 0)
+                ->count();
             return view('application_management_views.startuper_dasboard',
                 [
                     'application' => $application,
                     "title" => "Welcome back",
                     "deadline" => $deadline,
-                    "positive_votes" => $positive_votes,
-                    "negative_votes" => $negative_votes
+                    "unreaded_messages" => $unreaded_messages
                 ]);
         } else
             return redirect('login');

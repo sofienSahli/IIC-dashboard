@@ -1,12 +1,12 @@
-let url = "http://localhost:8000/"
-
+let url = "http://127.0.0.1:8000/"
+let request_interval = 10000;
 document.addEventListener("DOMContentLoaded", function () {
     setInterval(function () {
         submitedVotes();
-    }, 1000);
+    }, request_interval);
     setInterval(function () {
         disabledAccoutns();
-    }, 1000);
+    }, request_interval);
 });
 
 

@@ -16,3 +16,6 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('send/message', '\App\Http\Controllers\MessagerieController@sendNewMessage');
+Route::get('active/message/{id_connected}/{id_sender}', '\App\Http\Controllers\MessagerieController@track_discussion');
