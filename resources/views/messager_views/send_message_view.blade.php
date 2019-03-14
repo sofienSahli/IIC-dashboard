@@ -5,7 +5,7 @@
 
         #scrollable {
             overflow-y: scroll;
-            height: 70vh;
+            height: 69vh;
         }
 
         .details li {
